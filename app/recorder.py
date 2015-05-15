@@ -29,3 +29,9 @@ class Recorder(object):
     def close(self):
         self._stream.close()
         self._audio.terminate()
+
+    def __del__(self):
+        try:
+            self.close()
+        except:
+            pass
