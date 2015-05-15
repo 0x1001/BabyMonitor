@@ -4,10 +4,13 @@ import unittest
 class TestRecorder(unittest.TestCase):
 
     def test_record(self):
+        import time
         import recorder
 
         r = recorder.Recorder()
+        time.sleep(0.2)
         r.record(0.1)
+        r.record(0.2)
 
 
 if __name__ == "__main__":

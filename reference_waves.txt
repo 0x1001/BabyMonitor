@@ -1,0 +1,3 @@
+/home/pi/gitwork/Sandbox/sound_processing/samples/_rec_20150407-1700.wav
+/home/pi/gitwork/Sandbox/sound_processing/samples/rec_20150407-1659.wav
+/home/pi/gitwork/Sandbox/sound_processing/samples/rec_20150408-1239.wav

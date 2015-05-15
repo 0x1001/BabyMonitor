@@ -2,12 +2,13 @@ class Analyzer(object):
 
     def finger_print(self, data):
         import numpy as np
+        import fingerprint
 
         audio_data = np.fromstring(data, dtype=np.int16)
 
         freq, amp = self._fft(audio_data)
 
-        return self._generate_print(freq, amp)
+        return fingerprint.FingerPrint(self._generate_print(freq, amp))
 
     def _fft(self, audio_data):
         from numpy import fft

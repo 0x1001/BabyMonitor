@@ -1,9 +1,13 @@
+TOLERANCE = 0.002
+THRESHOLD = 50
+
+
 class FingerPrint(object):
 
     def __init__(self, finger_print):
         self._data = finger_print
 
-    def compare(self, finger_print, tolerance, threshold):
+    def compare(self, finger_print):
         data = finger_print.data()
 
         if len(self._data) > len(data):
@@ -14,10 +18,10 @@ class FingerPrint(object):
             first_freq, first_amp = self._data[i]
             second_freq, second_amp = data[i]
 
-            if first_freq - tolerance <= second_freq and second_freq <= first_freq + tolerance:
+            if first_freq - TOLERANCE <= second_freq and second_freq <= first_freq + TOLERANCE:
                 hits += 1
 
-        if 100 * hits / len(self._data) > threshold:
+        if 100 * hits / len(self._data) > THRESHOLD:
             return True
         else:
             return False

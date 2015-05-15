@@ -12,6 +12,7 @@ class Recorder(object):
                                         rate=self._RATE,
                                         input=True,
                                         frames_per_buffer=self._CHUNK)
+        self._stream.stop_stream()
 
     def record(self, duration):
         self._stream.start_stream()
