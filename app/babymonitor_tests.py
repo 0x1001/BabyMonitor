@@ -8,10 +8,14 @@ class TestBabyMonitor(unittest.TestCase):
 
         def record(self, _):
             import wave
+            import recording
 
             waveFile = wave.open(self._file_name)
 
-            return waveFile.readframes(waveFile.getnframes())
+            return recording.Recording(waveFile.readframes(waveFile.getnframes()),
+                                        waveFile.getframerate(),
+                                        waveFile.getsampwidth(),
+                                        waveFile.getnchannels())
 
         def close(self):
             pass

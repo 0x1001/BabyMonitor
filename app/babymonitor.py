@@ -18,8 +18,8 @@ class BabyMonitor(object):
 
     def start(self):
         while not self._exit.wait(0.2):
-            data = self._recorder.record(RECORD_TIME)
-            finger_print = self._analyzer.finger_print(data)
+            rec = self._recorder.record(RECORD_TIME)
+            finger_print = self._analyzer.finger_print(rec)
 
             for reference in self._storage.get():
                 if finger_print.compare(reference):

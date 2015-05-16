@@ -1,10 +1,15 @@
 class Analyzer(object):
 
-    def finger_print(self, data):
+    def finger_print(self, recording):
         import numpy as np
         import fingerprint
 
-        audio_data = np.fromstring(data, dtype=np.int16)
+        if recording.data_format() == 2:
+            data_type = np.int16
+        else:
+            raise Exception("Wrong data format!" + str(recording.format()))
+
+        audio_data = np.fromstring(recording.data(), dtype=data_type)
 
         freq, amp = self._fft(audio_data)
 
