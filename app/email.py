@@ -6,13 +6,17 @@ class Email(object):
         self._server = turbosmtp.TurboSMTP(config.email.username, config.email.password)
 
         self._mail = mail.Mail()
-        self._mail.setFrom("babymonitor@venus")
-        self._mail.setSubject("Piotr placze!")
+        self._mail.setFrom("babymonitor@venus.raspberry")
+        self._mail.setSubject("Baby Monitor")
 
     def contents(self, contents):
         self._mail.setContent(contents)
 
     def send(self, addresses):
+        from turbosmtp import turbosmtp
         for address in addresses:
             self._mail.setTo(address)
-            self._server.send(self._mail)
+            try:
+                self._server.send(self._mail)
+            except turbosmtp.TurboSMTPException as error:
+                print "Cannot send email: " + str(error)

@@ -14,9 +14,9 @@ class TestEmail(unittest.TestCase):
         cfg = config.Config("../config.json_example")
         e = email.Email(cfg)
         e._server = DummyServer()
-        e.send("dummy@dummy")
+        e.send(["dummy@dummy.eu"])
 
-    #@unittest.skip("Sending real email")
+    @unittest.skip("Sending real email")
     def test_real_email(self):
         import email
         import config

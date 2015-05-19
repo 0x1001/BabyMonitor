@@ -8,6 +8,12 @@ class FingerPrint(object):
         self._data = finger_print
 
     def compare(self, finger_print):
+        if self.compare_confidence(finger_print) > THRESHOLD:
+            return True
+        else:
+            return False
+
+    def compare_confidence(self, finger_print):
         data = finger_print.data()
 
         if len(self._data) > len(data):
@@ -21,10 +27,7 @@ class FingerPrint(object):
             if first_freq - TOLERANCE <= second_freq and second_freq <= first_freq + TOLERANCE:
                 hits += 1
 
-        if 100 * hits / len(self._data) > THRESHOLD:
-            return True
-        else:
-            return False
+        return 100 * hits / len(self._data)
 
     def data(self):
         return self._data

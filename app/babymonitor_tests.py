@@ -22,7 +22,7 @@ class TestBabyMonitor(unittest.TestCase):
 
     def test_babymonitor(self):
         self.babymonitor("test_data/__rec_20150426-1033.wav", False)
-        self.babymonitor("test_data/_rec_20150407-1700.wav", True)
+        self.babymonitor("test_data/2015-05-17 22:25:59.451634.wav", True)
 
     def babymonitor(self, file_name, outcome):
         import babymonitor
