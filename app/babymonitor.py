@@ -1,4 +1,4 @@
-RECORD_TIME = 2
+RECORD_TIME = 3
 
 
 class BabyMonitor(object):

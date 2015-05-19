@@ -1,3 +1,5 @@
-/home/pi/gitwork/Sandbox/sound_processing/samples/_rec_20150407-1700.wav
-/home/pi/gitwork/Sandbox/sound_processing/samples/rec_20150407-1659.wav
-/home/pi/gitwork/Sandbox/sound_processing/samples/rec_20150408-1239.wav
+/home/pi/gitwork/BabyMonitor/reference_sample/2015-05-17 22:25:59.451634.wav
+/home/pi/gitwork/BabyMonitor/reference_sample/2015-05-17 22:26:16.113202.wav
+/home/pi/gitwork/BabyMonitor/reference_sample/2015-05-17 22:26:34.951358.wav
+/home/pi/gitwork/BabyMonitor/reference_sample/2015-05-17 22:27:41.080089.wav
+/home/pi/gitwork/BabyMonitor/reference_sample/2015-05-17 22:28:26.702244.wav

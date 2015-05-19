@@ -2,6 +2,7 @@ def add_finger_print(file_path):
     import wave
     import analyzer
     import storage
+    import recording
 
     a = analyzer.Analyzer()
     s = storage.Storage()
@@ -9,7 +10,9 @@ def add_finger_print(file_path):
     waveFile = wave.open(file_path)
     waveData = waveFile.readframes(waveFile.getnframes())
 
-    finger_print = a.finger_print(waveData)
+    rec = recording.Recording(waveData, waveFile.getframerate(), waveFile.getsampwidth(), waveFile.getnchannels())
+
+    finger_print = a.finger_print(rec)
 
     s.add(finger_print)
 

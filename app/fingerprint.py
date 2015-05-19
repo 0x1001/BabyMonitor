@@ -1,5 +1,5 @@
 TOLERANCE = 0.002
-THRESHOLD = 10
+THRESHOLD = 20
 
 
 class FingerPrint(object):

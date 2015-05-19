@@ -22,7 +22,7 @@ if __name__ == "__main__":
                         type=int,
                         help="Recording time",
                         dest="time",
-                        default=2)
+                        default=3)
 
     args = parser.parse_args()
 
