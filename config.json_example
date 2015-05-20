@@ -4,7 +4,7 @@
         "password": "example_password"
     },
     "babymonitor": {
-        "record_time": "3"
+        "record_time": 3
         "mail_list": ["dummy@gmail.com"]
     }
 }

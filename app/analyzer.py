@@ -21,6 +21,7 @@ class Analyzer(object):
 
         amp = fft.fft(audio_data)
         amp = amp.real
+
         freq = fft.fftfreq(audio_data.shape[-1])
 
         to_delete = []

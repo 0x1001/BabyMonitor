@@ -14,20 +14,33 @@ class Recorder(object):
                                         channels=self._CHANNELS,
                                         rate=self._RATE,
                                         input=True,
-                                        frames_per_buffer=self._CHUNK)
-        self._stream.stop_stream()
+                                        frames_per_buffer=self._CHUNK,
+                                        start=False)
 
     def record(self, duration):
-        import recording
+        import datetime
 
         self._stream.start_stream()
+
+        while True:
+            try:
+                rec = self._record(duration)
+            except IOError:
+                print str(datetime.datetime.now()) + " - Overflow happend!"
+            else:
+                break
+
+        self._stream.stop_stream()
+
+        return rec
+
+    def _record(self, duration):
+        import recording
 
         frames = []
         for i in range(0, int(self._RATE / self._CHUNK * duration)):
             data = self._stream.read(self._CHUNK)
             frames.append(data)
-
-        self._stream.stop_stream()
 
         return recording.Recording(b''.join(frames), self._RATE, self._FORMAT, self._CHANNELS)
 
