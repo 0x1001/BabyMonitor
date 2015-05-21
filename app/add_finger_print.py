@@ -14,7 +14,7 @@ def add_finger_print(file_path):
 
     finger_print = a.finger_print(rec)
 
-    s.add(finger_print)
+    s.add_finger_print(finger_print)
 
 if __name__ == "__main__":
     import argparse

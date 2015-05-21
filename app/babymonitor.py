@@ -65,7 +65,7 @@ class BabyMonitor(object):
             except Queue.Empty:
                 continue
 
-            for reference in self._storage.get():
+            for reference in self._storage.get_finger_prints():
                 if finger_print.compare(reference):
                     self._notify(finger_print.compare_confidence(reference))
                     break
@@ -84,6 +84,8 @@ class BabyMonitor(object):
                                                                               confidence)
             self._email.contents(contents)
             self._email.send(self._config.babymonitor.mail_list)
+
+            self._storage.add_occurence(now, confidence)
 
             print "###############################"
             print contents
