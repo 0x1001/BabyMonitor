@@ -17,22 +17,11 @@ class Analyzer(object):
 
     def _fft(self, audio_data):
         from numpy import fft
-        import numpy as np
 
-        amp = fft.fft(audio_data)
-        amp = amp.real
+        amp = fft.rfft(audio_data)
+        freq = fft.fftfreq(audio_data.shape[-1])[:len(amp)]
 
-        freq = fft.fftfreq(audio_data.shape[-1])
-
-        to_delete = []
-        for i in range(len(amp)):
-            if freq[i] < 0 or amp[i] < 0:
-                to_delete.append(i)
-
-        amp = np.delete(amp, to_delete)
-        freq = np.delete(freq, to_delete)
-
-        return freq, amp
+        return freq, amp.real
 
     def _generate_print(self, freq, amp):
         data = zip(freq, amp)
