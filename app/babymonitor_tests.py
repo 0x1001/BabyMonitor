@@ -1,4 +1,6 @@
 import unittest
+import email
+import storage
 
 
 class TestBabyMonitor(unittest.TestCase):
@@ -20,6 +22,15 @@ class TestBabyMonitor(unittest.TestCase):
         def close(self):
             pass
 
+    class StubStorage(storage.Storage):
+        def add_occurence(self, *args):
+            pass
+
+    class StubEmail(email.Email):
+        def send(self, *args):
+            pass
+
+    @unittest.skip("Full blown test")
     def test_babymonitor(self):
         self.babymonitor("test_data/__rec_20150426-1033.wav", False)
         self.babymonitor("test_data/2015-05-17 22:25:59.451634.wav", True)
@@ -35,7 +46,7 @@ class TestBabyMonitor(unittest.TestCase):
         t = threading.Thread(target=b.start)
         t.start()
 
-        time.sleep(1)
+        time.sleep(5)
         b.stop()
 
         t.join()

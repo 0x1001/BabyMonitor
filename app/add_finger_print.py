@@ -18,19 +18,16 @@ def add_finger_print(file_path):
 
 if __name__ == "__main__":
     import argparse
+    import os
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", type=str, help="Path to wave file", dest="file")
-    parser.add_argument("-l", "--list", type=str, help="Path to wave file list", dest="list")
+    parser.add_argument("-d", "--dir", type=str, help="Path to folder with wave files", dest="dir")
 
     args = parser.parse_args()
 
-    if args.list is not None:
-        with open(args.list) as fp:
-            waves = fp.readlines()
-
-        waves = [wave.strip() for wave in waves]
-
+    if args.dir is not None:
+        waves = [os.path.join(args.dir, file_name) for file_name in os.listdir(args.dir) if file_name.endswith(".wav")]
     else:
         waves = [args.file]
 

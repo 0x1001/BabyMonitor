@@ -35,9 +35,13 @@ class BabyMonitor(object):
         self._detecting_process.join()
         [p.join() for p in self._processing_processes]
 
+        self._recorder.close()
+
     def stop(self):
         self._exit.set()
-        self._recorder.close()
+        self._recording_process.terminate()
+        self._detecting_process.terminate()
+        [p.terminate() for p in self._processing_processes]
 
     def _recording(self):
         while not self._exit.is_set():
