@@ -1,5 +1,5 @@
 class Recorder(object):
-    _CHUNK = 512
+    _CHUNK = 1024
     _RATE = 44100
     _CHANNELS = 1
 
@@ -14,7 +14,7 @@ class Recorder(object):
                                         channels=self._CHANNELS,
                                         rate=self._RATE,
                                         input=True,
-                                        frames_per_buffer=self._CHUNK,
+                                        frames_per_buffer=self._CHUNK / 2,
                                         start=False)
 
     def record(self, duration):
