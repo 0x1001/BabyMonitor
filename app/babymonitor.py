@@ -78,6 +78,7 @@ class BabyMonitor(object):
         import datetime
 
         now = datetime.datetime.now()
+        self._storage.add_occurence(now, confidence)
 
         if self._last_notification is None or (now - self._last_notification).total_seconds() > 300:
             self._last_notification = now
@@ -88,8 +89,6 @@ class BabyMonitor(object):
                                                                               confidence)
             self._email.contents(contents)
             self._email.send(self._config.babymonitor.mail_list)
-
-            self._storage.add_occurence(now, confidence)
 
             print "###############################"
             print contents

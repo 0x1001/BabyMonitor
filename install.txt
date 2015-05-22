@@ -5,3 +5,6 @@ $ sudo apt-get install libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-
 $ sudo apt-get python-dev
 $ cd pyaudio
 $ sudo python setup.py install
+
+Install matplotlib
+$ sudo apt-get install python-matplotlib
