@@ -4,19 +4,17 @@ def plot_day(day):
 
     occurences = _get_occurences()
 
-    x = []
-    y = []
-    for hour in range(24):
-        time = datetime.time(hour=hour, minute=0)
-        day_time = datetime.datetime.combine(day, time)
-        x.append(hour)
-        y.append(0)
+    x = range(24)
+    y = [0] * 24
 
-        for occur_time, occur_confidence in occurences:
-            if day_time <= occur_time and occur_time <= day_time + datetime.timedelta(hours=1):
-                y[hour] += 1
+    midnight = datetime.datetime.combine(day, datetime.time(hour=0, minute=0))
 
-    plt.bar(x, y, color='g', align='center', width=0.5)
+    for occur_time, occur_confidence in occurences:
+        if day.strftime("%d%m%y") == occur_time.date().strftime("%d%m%y"):
+            idx = int((occur_time - midnight).total_seconds() / (60 * 60))
+            y[idx] += 1
+
+    plt.bar(x, y, color='g', align='edge', width=1)
     plt.ylabel('Occurences')
     plt.grid(True)
     plt.axis([0, 24, 0, max(y) + max(y) * 0.1])
@@ -41,7 +39,7 @@ def plot_all():
         idx = int(math.ceil((last - occur_time.date()).total_seconds() / (60 * 60 * 24)))
         y[idx] += 1
 
-    plt.bar(x, y, color='r', align='center', width=0.5)
+    plt.bar(x, y, color='r', align='edge', width=1)
     plt.ylabel('Occurences')
     plt.grid(True)
     plt.axis([0, days, 0, max(y) + max(y) * 0.1])
