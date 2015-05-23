@@ -36,7 +36,7 @@ def plot_all():
     x = range(days)
     y = [0] * days
     for occur_time, occur_confidence in occurences:
-        idx = int(math.ceil((last - occur_time.date()).total_seconds() / (60 * 60 * 24)))
+        idx = int(math.ceil((occur_time.date() - first).total_seconds() / (60 * 60 * 24)))
         y[idx] += 1
 
     plt.bar(x, y, color='r', align='edge', width=1)
@@ -46,10 +46,29 @@ def plot_all():
     plt.show()
 
 
+def plot_confidence():
+    import matplotlib.pyplot as plt
+
+    occurences = _get_occurences()
+
+    x = range(0, 100)
+    y = [0] * 100
+    for occur_time, occur_confidence in occurences:
+        idx = int(occur_confidence)
+        y[idx] += 1
+
+    plt.bar(x, y, color='b', align='edge', width=1)
+    plt.ylabel('Confidence')
+    plt.grid(True)
+    plt.axis([0, 100, 0, max(y) + max(y) * 0.1])
+    plt.show()
+
+
 def _get_occurences():
     import storage
+    import config
 
-    s = storage.Storage()
+    s = storage.Storage(config.Config("../config.json"))
     return s.get_occurences()
 
 
@@ -59,11 +78,14 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--day", type=str, help="Plot daily occurences. Date format: 2015-05-22", dest="day")
+    parser.add_argument("-c", "--confidence", action='store_true', help="Plot confidence ranges", dest="confidence")
 
     args = parser.parse_args()
 
     if args.day is not None:
         day = datetime.datetime.strptime(args.day, "%Y-%m-%d")
         plot_day(day)
+    elif args.confidence:
+        plot_confidence()
     else:
         plot_all()

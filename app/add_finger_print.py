@@ -3,9 +3,10 @@ def add_finger_print(file_path):
     import analyzer
     import storage
     import recording
+    import config
 
     a = analyzer.Analyzer()
-    s = storage.Storage()
+    s = storage.Storage(config.Config("../config.json"))
 
     waveFile = wave.open(file_path)
     waveData = waveFile.readframes(waveFile.getnframes())
