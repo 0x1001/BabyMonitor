@@ -6,5 +6,9 @@
     "babymonitor": {
         "record_time": 3,
         "mail_list": ["dummy@gmail.com"]
+    },
+    "storage": {
+        "finger_print_db": "../finger_prints.pckl",
+        "occurence_db": "../occurences.pckl"
     }
 }

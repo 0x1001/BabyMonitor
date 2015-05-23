@@ -4,42 +4,45 @@ import unittest
 class TestStorage(unittest.TestCase):
     TEMP_DB = "/tmp/babymonitor.dumy.test"
 
-    def setUp(self):
-        import os
+    def tearDown(self):
+        self._clean()
 
-        if os.path.isfile(self.TEMP_DB):
-            os.unlink(self.TEMP_DB)
+    def setUp(self):
+        import storage
+        import config
+
+        cfg = config.Config("test_data/test_config.json")
+        self.s = storage.Storage(cfg)
+        self._clean()
 
     def test_storage_finger_prints(self):
-        import storage
-        import os
-
-        storage.FINGER_PRINT_DB = self.TEMP_DB
-        s = storage.Storage()
-
         data = [(1, 2), (1, 2)]
 
-        s.add_finger_print(data)
-        data_read = s.get_finger_prints()
-
-        os.unlink(self.TEMP_DB)
+        self.s.add_finger_print(data)
+        data_read = self.s.get_finger_prints()
 
         self.assertEqual(data_read, [data])
 
     def test_storage_occurences(self):
-        import storage
-        import os
         import datetime
 
         time = datetime.datetime.now()
         confidence = 50
 
-        storage.OCCURENCE_DB = self.TEMP_DB
-        s = storage.Storage()
-        s.add_occurence(time, confidence)
-        s.get_occurences()
+        self.s.add_occurence(time, confidence)
+        self.s.get_occurences()
 
-        os.unlink(self.TEMP_DB)
+    def _clean(self):
+        import os
+        import config
+
+        cfg = config.Config("test_data/test_config.json")
+
+        if os.path.isfile(cfg.storage.finger_print_db):
+            os.unlink(cfg.storage.finger_print_db)
+
+        if os.path.isfile(cfg.storage.occurence_db):
+            os.unlink(cfg.storage.occurence_db)
 
 if __name__ == "__main__":
     unittest.main()
