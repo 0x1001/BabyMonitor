@@ -1,30 +1,47 @@
 class BabyMonitorCore(object):
+
+    def __init__(self, cfg):
+        import multiprocessing
+        import recorder
+        import storage
+        import analyzer
+        import email
+
+        self._config = cfg
+
+        self._recorder = recorder.Recorder()
+        self._analyzer = analyzer.Analyzer()
+        self._storage = storage.Storage(self._config)
+        self._email = email.Email(self._config)
+
+        self._last_notification = None
+
+        self._recording_queue = multiprocessing.Queue()
+        self._finger_print_queue = multiprocessing.Queue()
+
     def _recording(self):
-        while not self._exit.is_set():
-            rec = self._recorder.record(self._config.babymonitor.record_time)
-            self._recording_queue.put(rec)
+        rec = self._recorder.record(self._config.babymonitor.record_time)
+        self._recording_queue.put(rec)
 
     def _processing(self):
         import Queue
 
-        while not self._exit.is_set():
-            try:
-                rec = self._recording_queue.get(timeout=0.2)
-            except Queue.Empty:
-                continue
-
+        try:
+            rec = self._recording_queue.get(timeout=0.2)
+        except Queue.Empty:
+            pass
+        else:
             finger_print = self._analyzer.finger_print(rec)
             self._finger_print_queue.put(finger_print)
 
     def _detecting(self):
         import Queue
 
-        while not self._exit.is_set():
-            try:
-                finger_print = self._finger_print_queue.get(timeout=0.2)
-            except Queue.Empty:
-                continue
-
+        try:
+            finger_print = self._finger_print_queue.get(timeout=0.2)
+        except Queue.Empty:
+            pass
+        else:
             confidences = []
             match_found = False
             for reference in self._storage.get_finger_prints():
@@ -43,8 +60,6 @@ class BabyMonitorCore(object):
 
         if self._last_notification is None or (now - self._last_notification).total_seconds() > 300:
             self._last_notification = now
-
-            self._detected.set()
 
             contents = "Piotr Placze!\nTime: {}\nConfidence: {:.2f} %".format(str(now),
                                                                               confidence)
