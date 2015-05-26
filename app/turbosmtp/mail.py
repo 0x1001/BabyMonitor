@@ -1,66 +1,81 @@
 class Mail(object):
 
-    def __init__(self, _from="", _to="", _cc="", _bcc="", _subject="", _content="", _html_content="", _custom_headers="", _mime_raw=""):
-        self.__from = _from
-        self.__to = _to
-        self.__cc = _cc
-        self.__bcc = _bcc
-        self.__subject = _subject
-        self.__content = _content
-        self.__html_content = _html_content
-        self.__custom_headers = _custom_headers
-        self.__mime_raw = _mime_raw
+    def __init__(self, _from="", _to="", _cc="", _bcc="", _subject=""):
+        import uuid
+
+        self._boundry = uuid.uuid4().hex
+
+        self._from = _from
+        self._to = _to
+        self._cc = _cc
+        self._bcc = _bcc
+        self._subject = _subject
+        self._mime_raw = "Content-Type: multipart/mixed; boundary=" + self._boundry + "\n\n"
 
     def getFrom(self):
-        return self.__from
+        return self._from
 
     def getTo(self):
-        return self.__to
+        return self._to
 
     def getCc(self):
-        return self.__cc
+        return self._cc
 
     def getBcc(self):
-        return self.__bcc
+        return self._bcc
 
     def getSubject(self):
-        return self.__subject
-
-    def getContent(self):
-        return self.__content
-
-    def getHtmlContent(self):
-        return self.__html_content
-
-    def getCustomHeaders(self):
-        return self.__custom_headers
+        return self._subject
 
     def getMimeRaw(self):
-        return self.__mime_raw
+        return self._mime_raw + "\n--" + self._boundry + "--\n"
+
+    def getContent(self):
+        return ""
+
+    def getCustomHeaders(self):
+        return ""
+
+    def getHtmlContent(self):
+        return ""
 
     def setFrom(self, _from):
-        self.__from = _from
+        self._from = _from
 
     def setTo(self, to):
-        self.__to = to
+        self._to = to
 
     def setCc(self, cc):
-        self.__cc = cc
+        self._cc = cc
 
     def setBcc(self, bcc):
-        self.__bcc = bcc
+        self._bcc = bcc
 
     def setSubject(self, subject):
-        self.__subject = subject
+        self._subject = subject
 
     def setContent(self, content):
-        self.__content = content
+        self._mime_raw += "--" + self._boundry + "\n"
+        self._mime_raw += "Content-Type: text/plain; charset=UTF-8\n"
+        self._mime_raw += "\n"
+        self._mime_raw += content
+        self._mime_raw += "\n"
 
-    def setHtmlContent(self, html_content):
-        self.__html_content = html_content
+    def setAttachment(self, file_path):
+        import os
 
-    def setCustomHeaders(self, custom_headers):
-        self.__custom_headers = custom_headers
+        file_name = os.path.basename(file_path)
+        file_size = os.path.getsize(file_path)
 
-    def setMimeRaw(self, mime_raw):
-        self.__mime_raw = mime_raw
+        self._mime_raw += "--" + self._boundry + "\n"
+        self._mime_raw += "Content-Type: text/plain; name=\"" + file_name + "\"\n"
+        self._mime_raw += "Content-Description: " + file_name + "\n"
+        self._mime_raw += "Content-Disposition: attachment; filename=\"" + file_name + "\"; size=" + str(file_size) + "\n"
+        self._mime_raw += "Content-Transfer-Encoding: base64\n"
+        self._mime_raw += "\n"
+
+        with open(file_path, "rb") as fp:
+            contents = fp.read().encode("base64")
+
+        self._mime_raw += contents
+        self._mime_raw += "\n"

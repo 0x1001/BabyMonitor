@@ -12,6 +12,9 @@ class Email(object):
     def contents(self, contents):
         self._mail.setContent(contents)
 
+    def attach(self, file_path):
+        self._mail.setAttachment(file_path)
+
     def send(self, addresses):
         from turbosmtp import turbosmtp
         for address in addresses:

@@ -26,5 +26,16 @@ class TestEmail(unittest.TestCase):
         e.contents("Test Test")
         e.send(["damian.nowok@gmail.com"])
 
+    @unittest.skip("Sending real email with attachment")
+    def test_real_email_with_attachment(self):
+        import email
+        import config
+
+        cfg = config.Config("../config.json")
+        e = email.Email(cfg)
+        e.contents("Test 2. Test 2")
+        e.attach(__file__)
+        e.send(["damian.nowok@gmail.com"])
+
 if __name__ == "__main__":
     unittest.main()
