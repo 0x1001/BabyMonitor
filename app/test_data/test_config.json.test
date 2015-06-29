@@ -1,0 +1,14 @@
+{
+    "email": {
+        "username": "example_username",
+        "password": "example_password"
+    },
+    "babymonitor": {
+        "record_time": 3,
+        "mail_list": ["dummy@gmail.com"]
+    },
+    "storage": {
+        "finger_print_db": "/tmp/finger_prints.pckl",
+        "occurence_db": "/tmp/occurences.pckl"
+    }
+}

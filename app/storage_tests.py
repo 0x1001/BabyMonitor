@@ -2,8 +2,6 @@ import unittest
 
 
 class TestStorage(unittest.TestCase):
-    TEMP_DB = "/tmp/babymonitor.dumy.test"
-
     def tearDown(self):
         self._clean()
 
@@ -11,7 +9,7 @@ class TestStorage(unittest.TestCase):
         import storage
         import config
 
-        cfg = config.Config("test_data/test_config.json")
+        cfg = config.Config("test_data/test_config.json.test")
         self.s = storage.Storage(cfg)
         self._clean()
 
@@ -36,7 +34,7 @@ class TestStorage(unittest.TestCase):
         import os
         import config
 
-        cfg = config.Config("test_data/test_config.json")
+        cfg = config.Config("test_data/test_config.json.test")
 
         if os.path.isfile(cfg.storage.finger_print_db):
             os.unlink(cfg.storage.finger_print_db)

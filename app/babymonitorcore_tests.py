@@ -10,7 +10,7 @@ class TestBabyMonitorCore(unittest.TestCase):
 
         stubpyaudio.init()
 
-        cfg = config.Config("test_data/test_config.json")
+        cfg = config.Config("test_data/test_config.json.test")
         self.m = babymonitorcore.BabyMonitorCore(cfg)
 
     def tearDown(self):
