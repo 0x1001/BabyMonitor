@@ -32,7 +32,7 @@ class TurboSMTP(object):
             req = urllib2.Request(self.SERVER_URL, encodedDataToSend)
             response = urllib2.urlopen(req)
             response_code = response.read()
-        except urllib2.HTTPError as error:
+        except urllib2.URLError as error:
             raise TurboSMTPException(error)
 
         if not response_code == '{"message":"OK"}':
