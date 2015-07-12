@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Install pyaudio
 cd ..
 git clone http://people.csail.mit.edu/hubert/git/pyaudio.git
