@@ -22,7 +22,7 @@ class TestBabyMonitorCore(unittest.TestCase):
         self.m._recording()
         self.m._processing()
         self.m._detecting()
-        self.m._notify(50)
+        self.m._notify([50, 24], ["test_test.wave", None])
 
 
 if __name__ == "__main__":

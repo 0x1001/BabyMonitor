@@ -4,6 +4,7 @@ def add_finger_print(file_path):
     import storage
     import recording
     import config
+    import os
 
     a = analyzer.Analyzer()
     s = storage.Storage(config.Config("../config.json"))
@@ -14,6 +15,7 @@ def add_finger_print(file_path):
     rec = recording.Recording(waveData, waveFile.getframerate(), waveFile.getsampwidth(), waveFile.getnchannels())
 
     finger_print = a.finger_print(rec)
+    finger_print.set_name(os.path.basename(file_path))
 
     s.add_finger_print(finger_print)
 

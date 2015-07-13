@@ -21,16 +21,16 @@ class Storage(object):
 
     def _load(self, file_path):
         import os
-        import pickle
+        import cPickle
 
         if os.path.isfile(file_path):
             with open(file_path, 'rb') as fp:
-                return pickle.load(fp)
+                return cPickle.load(fp)
         else:
             return []
 
     def _save(self, file_path, db):
-        import pickle
+        import cPickle
 
         with open(file_path, 'wb') as fp:
-            pickle.dump(db, fp)
+            cPickle.dump(db, fp)

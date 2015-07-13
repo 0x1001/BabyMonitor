@@ -6,6 +6,7 @@ class FingerPrint(object):
 
     def __init__(self, finger_print):
         self._data = finger_print
+        self._name = None
 
     def compare(self, finger_print):
         if self.compare_confidence(finger_print) > THRESHOLD:
@@ -31,3 +32,9 @@ class FingerPrint(object):
 
     def data(self):
         return self._data
+
+    def set_name(self, name):
+        self._name = name
+
+    def get_name(self):
+        return self._name
