@@ -31,8 +31,11 @@ if __name__ == "__main__":
 
     if args.dir is not None:
         waves = [os.path.join(args.dir, file_name) for file_name in os.listdir(args.dir) if file_name.endswith(".wav")]
-    else:
+    elif args.file is not None:
         waves = [args.file]
+    else:
+        parser.print_help()
+        waves = []
 
     for wave in waves:
         print "Processing: " + wave
