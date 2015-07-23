@@ -10,3 +10,7 @@ sudo python setup.py install
 
 # Install matplotlib
 sudo apt-get install -y python-matplotlib
+
+# Install turbosmtp
+sudo pip install turbosmtp
+

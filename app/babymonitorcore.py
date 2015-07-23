@@ -52,7 +52,7 @@ class BabyMonitorCore(object):
 
     def _notify(self, confidences, finger_print_names):
         import datetime
-        import email
+        import emailmessage
 
         now = datetime.datetime.now()
         self._storage.add_occurence(now, max(confidences))
@@ -64,7 +64,7 @@ class BabyMonitorCore(object):
             for i in range(len(confidences)):
                 contents += "Confidence: {:.2f} % Finger print name: {:s}\n".format(confidences[i], finger_print_names[i])
 
-            email = email.Email(self._config)
+            email = emailmessage.EmailMessage(self._config)
             email.contents(contents)
             email.send(self._config.babymonitor.mail_list)
 
