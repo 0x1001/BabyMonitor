@@ -27,7 +27,7 @@ $ cd BabyMonitor
 $ ./install.sh
 ```
 
-## Starting and Stopping
+## Commands
 
 ```sh
 $ ./babymonitor.sh start
@@ -35,6 +35,14 @@ $ ./babymonitor.sh start
 
 ```sh
 $ ./babymonitor.sh stop
+```
+
+```sh
+$ ./babymonitor.sh graph
+```
+
+```sh
+$ ./babymonitor.sh test
 ```
 
 ## Change log

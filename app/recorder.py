@@ -1,3 +1,7 @@
+class RecorderException(Exception):
+    pass
+
+
 class Recorder(object):
     _CHUNK = 1024
     _RATE = 44100
@@ -18,15 +22,13 @@ class Recorder(object):
                                         start=False)
 
     def record(self, duration):
-        import datetime
-
         self._stream.start_stream()
 
         while True:
             try:
                 rec = self._record(duration)
-            except Exception as error:
-                print str(datetime.datetime.now()) + " - Overflow happend! " + str(error)
+            except RecorderException:
+                pass  # Ignore
             else:
                 break
 
@@ -41,8 +43,8 @@ class Recorder(object):
         for i in range(0, int(self._RATE / self._CHUNK * duration)):
             try:
                 data = self._stream.read(self._CHUNK)
-            except IOError:
-                raise Exception(str(i))
+            except IOError as error:
+                raise RecorderException(error)
             frames.append(data)
 
         return recording.Recording(b''.join(frames), self._RATE, self._FORMAT, self._CHANNELS)

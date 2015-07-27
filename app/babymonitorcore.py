@@ -52,21 +52,31 @@ class BabyMonitorCore(object):
 
     def _notify(self, confidences, finger_print_names):
         import datetime
-        import emailmessage
 
         now = datetime.datetime.now()
         self._storage.add_occurence(now, max(confidences))
+        contents = self._format_occurences(now, confidences, finger_print_names)
+        self._print_occurences(contents)
 
         if self._last_notification is None or (now - self._last_notification).total_seconds() > 300:
             self._last_notification = now
+            self._send_email(contents)
 
-            contents = "Piotr Placze!\nTime: {}\n\n".format(str(now))
-            for i in range(len(confidences)):
-                contents += "Confidence: {:.2f} % Finger print name: {:s}\n".format(confidences[i], finger_print_names[i])
+    def _send_email(self, contents):
+        import emailmessage
 
-            email = emailmessage.EmailMessage(self._config)
-            email.contents(contents)
-            email.send(self._config.babymonitor.mail_list)
+        email = emailmessage.EmailMessage(self._config)
+        email.contents(contents)
+        email.send(self._config.babymonitor.mail_list)
 
-            print "###############################"
-            print contents
+    def _format_occurences(self, now, confidences, finger_print_names):
+        contents = "Piotr Placze!\nTime: {}\n\n".format(str(now))
+
+        for i in range(len(confidences)):
+            contents += "Confidence: {:.2f} % Finger print name: {:s}\n".format(confidences[i], finger_print_names[i])
+
+        return contents
+
+    def _print_occurences(self, contents):
+        print "###############################"
+        print contents
