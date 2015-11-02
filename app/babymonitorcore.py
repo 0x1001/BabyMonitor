@@ -5,11 +5,13 @@ class BabyMonitorCore(object):
         import recorder
         import storage
         import analyzer
+        import notifier
 
         self._config = cfg
 
         self._recorder = recorder.Recorder()
         self._analyzer = analyzer.Analyzer()
+        self._notifier = notifier.Notifier(self._config)
         self._storage = storage.Storage(self._config)
 
         self._last_notification = None
@@ -60,14 +62,7 @@ class BabyMonitorCore(object):
 
         if self._last_notification is None or (now - self._last_notification).total_seconds() > 300:
             self._last_notification = now
-            self._send_email(contents)
-
-    def _send_email(self, contents):
-        import emailmessage
-
-        email = emailmessage.EmailMessage(self._config)
-        email.contents(contents)
-        email.send(self._config.babymonitor.mail_list)
+            self._notifier.notify(contents)
 
     def _format_occurences(self, now, confidences, finger_print_names):
         contents = "Piotr Placze!\nTime: {}\n\n".format(str(now))

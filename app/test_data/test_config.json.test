@@ -3,6 +3,10 @@
         "username": "example_username",
         "password": "example_password"
     },
+    "pushover": {
+        "token": "token_example",
+        "user": "user_example"
+    },
     "babymonitor": {
         "record_time": 3,
         "mail_list": ["dummy@gmail.com"]
