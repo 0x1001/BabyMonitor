@@ -30,10 +30,9 @@ class EmailMessage(object):
     def send(self, addresses):
         import turbosmtp
 
-        for address in addresses:
-            self._msg["To"] = address
+        self._msg["To"] = ", ".join(addresses)
 
-            try:
-                self._server.send(self._msg)
-            except turbosmtp.TurboSMTPException as error:
-                print "Cannot send email: " + str(error)
+        try:
+            self._server.send(self._msg)
+        except turbosmtp.TurboSMTPException as error:
+            print "Cannot send email: " + str(error)

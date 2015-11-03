@@ -10,6 +10,7 @@ class Pushover(object):
 
     def send(self, contents):
         import httplib
+
         if self._disabled:
             return
 
