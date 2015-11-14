@@ -10,13 +10,14 @@ class Pushover(object):
 
     def send(self, contents):
         import httplib
+        import socket
 
         if self._disabled:
             return
 
         try:
             response = self._send_notification(contents)
-        except httplib.HTTPException as error:
+        except (httplib.HTTPException, socket.error) as error:
             print "Cannot send notification via Pushover. Error: " + str(error)
         else:
             self._analyze_server_response(response)
